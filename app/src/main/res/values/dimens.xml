@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    activity_main dimens -->
+    <dimen name="activity_main_bottom_margin">35dp</dimen>
+    <dimen name="activity_main_top_margin">60dp</dimen>
+    <dimen name="activity_main_horizontal_margin">25dp</dimen>
+
+    <dimen name="login_textSize">20sp</dimen>
+    <dimen name="login_bottom_margin">15dp</dimen>
+
+<!--    activity_register dimens -->
+    <dimen name="activity_register_bottom_margin">20dp</dimen>
+    <dimen name="activity_register_top_margin">70dp</dimen>
+    <dimen name="activity_register_horizontal_margin">25dp</dimen>
+</resources>

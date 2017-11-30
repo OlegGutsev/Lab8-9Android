@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Lab8-9Android</string>
+    <string name="login">Email</string>
+    <string name="repeat_password">Подтвердите пароль</string>
+    <string name="password">Пароль</string>
+    <string name="main_password">********</string>
+    <string name="sign_in">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="have_an_account">
+        <u>Я уже зарегистрирован.</u>
+    </string>
+    <string name="have_not_an_account">Зарегистрируйся сейчас.</string>
+    <string name="not_an_account">Нет аккаунта?</string>
+    <string name="Name">Имя</string>
+    <string name="Surname">Фамилия</string>
+    <string name="Mark">Оценка</string>
+    <string name="Save">Сохранить</string>
+    <string name="AddInformation">Дополнительная информация</string>
+</resources>

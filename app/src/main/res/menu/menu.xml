@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/groupVisibleChange">
+        <item
+            android:id="@+id/EditItem"
+            android:showAsAction="always"
+            android:title="изменить">
+        </item>
+    </group>
+
+    <group android:id="@+id/groupVisibleSort">
+    <item
+        android:id="@+id/SortItem"
+        android:showAsAction="always"
+        android:title="Сортировать">
+    </item>
+    </group>
+
+    <item
+
+        android:id="@+id/ExitItem"
+        android:showAsAction="always"
+        android:title="Выйти">
+    </item>
+
+
+</menu>
