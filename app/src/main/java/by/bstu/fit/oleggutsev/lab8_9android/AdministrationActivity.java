@@ -1,20 +1,30 @@
 package by.bstu.fit.oleggutsev.lab8_9android;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,11 +36,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.holder.StringHolder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.Badgeable;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class AdministrationActivity extends AppCompatActivity {
+public class AdministrationActivity extends ActionBarActivity {
 
     private final int MENU_CHANGE = 1;
     private static final String TAG = "AdministrationActivity";
@@ -52,11 +79,65 @@ public class AdministrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        // Handle Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Create the AccountHeader
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Oleg Gutsev").withEmail("oleg@mail.ru").withIcon(getResources().getDrawable(R.drawable.logotype))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+
+        new DrawerBuilder()
+                .withActivity(this)
+                .withAccountHeader(headerResult)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggle(true)
+                .withHeader(R.layout.drawer_header)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
+                        new SectionDrawerItem().withName(R.string.drawer_item_settings),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).withSelectable(false),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
+                ).withOnDrawerListener(new Drawer.OnDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Скрываем клавиатуру при открытии Navigation Drawer
+                InputMethodManager inputMethodManager = (InputMethodManager) AdministrationActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(AdministrationActivity.this.getCurrentFocus().getWindowToken(), 0);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+        }).build();
+
+
         mStudentsAdapter = new StudentsAdapter(getApplicationContext(), mStudentList, new StudentsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Student item) {
                 Intent intent = new Intent(AdministrationActivity.this, InformationActivity.class);
-                intent.putExtra("userId",item.getKey());
+                intent.putExtra("userId", item.getKey());
                 startActivity(intent);
             }
         });
@@ -111,7 +192,7 @@ public class AdministrationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       showDialog(1);
+        showDialog(1);
     }
 
     private void exit() {
@@ -182,7 +263,7 @@ public class AdministrationActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-         
+
             }
 
             @Override
@@ -287,17 +368,31 @@ public class AdministrationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.SortItem) {
             SortList();
-
         } else if (item.getItemId() == R.id.ExitItem) {
-
-            mAuth.signOut();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-
+            showDialog(1);
+        } else if (item.getItemId() == R.id.ListItem) {
+            initListDisplay();
+        } else {
+            initGridDisplay();
         }
         return true;
     }
 
+    // Display a list
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    private void initListDisplay() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        // recyclerView.setAdapter(mStudentsAdapter);
+    }
+
+    // Display the Grid
+    private void initGridDisplay() {
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        layoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+    }
 
     private void SortList() {
         List<Student> temp = mStudentList;

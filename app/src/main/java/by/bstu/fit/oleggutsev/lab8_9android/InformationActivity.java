@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -60,6 +61,10 @@ public class InformationActivity extends AppCompatActivity {
         mNameAndSurname = (TextView) findViewById(R.id.nameAndSurname);
         mMark = (TextView) findViewById(R.id.mark);
         mAddInformation = (TextView) findViewById(R.id.addInfo);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();

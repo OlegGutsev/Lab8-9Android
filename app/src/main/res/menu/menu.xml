@@ -17,6 +17,16 @@
         android:showAsAction="always"
         android:title="Сортировать">
     </item>
+        <item
+            android:id="@+id/ListItem"
+            android:showAsAction="always"
+            android:title="list">
+        </item>
+        <item
+            android:id="@+id/GridItem"
+            android:showAsAction="always"
+            android:title="Grid">
+        </item>
     </group>
 
     <item

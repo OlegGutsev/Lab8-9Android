@@ -35,6 +35,14 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile("com.mikepenz:materialdrawer:6.0.2@aar") {
+        transitive = true
+    }
+
+    compile('com.mikepenz:google-material-typeface:3.0.1.2.original@aar')
+    compile('com.mikepenz:fontawesome-typeface:4.7.0.2@aar')
+
+
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-auth:10.0.1'

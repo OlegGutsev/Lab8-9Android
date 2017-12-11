@@ -6,8 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorWhite"
-    tools:context="by.bstu.fit.oleggutsev.lab8_9android.InformationActivity">
+
+    android:background="@color/colorWhite" tools:context="by.bstu.fit.oleggutsev.lab8_9android.InformationActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingTop="@dimen/tool_bar_top_padding"
+        android:transitionName="actionBar" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
